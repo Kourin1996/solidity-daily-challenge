@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run compile",
-    "compile": "npx buidler compile",
-    "test": "npx buidler test"
+    "compile": "hardhat compile",
+    "test": "hardhat test"
   },
   "author": "kourin",
   "license": "ISC",

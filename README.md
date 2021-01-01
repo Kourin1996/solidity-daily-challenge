@@ -12,4 +12,4 @@ The challenge continues until I get a job as smart contract engineer.
 
 ## Challenges
 
-[#Day1 Calculator](https://github.com/Kourin1996/solidity-daily-challenge/day1/README.md)
+[#Day1 Calculator](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day1)
