@@ -38,7 +38,7 @@ describe("Calculator", () => {
   describe("subtracts", async () => {
     const subtractedNumber = 3;
 
-    it("should failed", async () => {
+    it("should fail", async () => {
       await expect(calculator.subtracts(subtractedNumber)).to.be.reverted;
     });
 
@@ -71,7 +71,7 @@ describe("Calculator", () => {
   describe("divides", async () => {
     const dividedNumber = 3;
 
-    it("should failed", async () => {
+    it("should fail", async () => {
       await expect(calculator.divides(0)).to.be.reverted;
     });
 

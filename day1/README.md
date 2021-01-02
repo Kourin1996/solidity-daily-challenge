@@ -30,7 +30,7 @@ The tool to generate typescript interface for contract
 
 ```bash
 npm init
-npm install --save-dev hardhat=
+npm install --save-dev hardhat
 npx hardhat
 # Select "Create an empty hardhat.config.js"
 
@@ -206,9 +206,6 @@ export default config;
 ```bash
 npx hardhat verify --network ropsten [CONTRACT_ADDRESS] 
 ```
-
-
-
 
 ## References
 

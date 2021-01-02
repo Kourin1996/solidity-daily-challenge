@@ -13,3 +13,8 @@ The challenge continues until I get a job as smart contract engineer.
 ## Challenges
 
 [#Day1 Calculator](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day1)
+- To know how to start smart contract project with latest tools
+
+[#Day2 Voting - Expanded from the official example](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day2)
+- To know modifier
+- To know how to run locally with ganache
