@@ -207,9 +207,6 @@ export default config;
 npx hardhat verify --network ropsten [CONTRACT_ADDRESS] 
 ```
 
-
-
-
 ## References
 
 - https://rahulsethuram.medium.com/the-new-solidity-dev-stack-buidler-ethers-waffle-typescript-tutorial-f07917de48ae
