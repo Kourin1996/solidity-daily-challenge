@@ -1,4 +1,4 @@
-# solidity-practice
+# solidity-daily-challenges
 
 Daily challenge of developing smart contract by Ethereum.
 The challenge continues until I get a job as smart contract engineer.
