@@ -19,6 +19,6 @@ The challenge continues until I get a job as smart contract engineer.
 - To know modifier
 - To know how to run locally with ganache
 
-[#Day3 ERO20 Token](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day3)
+[#Day3 ERC20 Token](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day3)
 - To know ERC20
 - To know transfer from contract
