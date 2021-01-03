@@ -1,4 +1,4 @@
-# day1
+# Day2 Voting - Expanded from the official example
 
 ## Biding target
 

@@ -1,4 +1,4 @@
-# day1
+# Day1 Calculator
 
 ## Biding target
 

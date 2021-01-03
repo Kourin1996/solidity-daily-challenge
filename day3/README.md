@@ -1,4 +1,4 @@
-# day3
+# Day3 ERO20 Token
 
 ## Biding target
 
