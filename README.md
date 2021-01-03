@@ -21,4 +21,3 @@ The challenge continues until I get a job as smart contract engineer.
 
 [#Day3 ERC20 Token](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day3)
 - To know ERC20
-- To know transfer from contract

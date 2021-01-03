@@ -3,7 +3,6 @@
 ## Biding target
 
 - To know ERC20
-- To know transfer from contract
 
 ## ERC20
 
