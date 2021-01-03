@@ -1,4 +1,4 @@
-# Day3 ERO20 Token
+# Day3 ERC20 Token
 
 ## Biding target
 
