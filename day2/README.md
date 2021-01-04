@@ -1,6 +1,6 @@
 # Day2 Voting - Expanded from the official example
 
-## Biding target
+## Target
 
 - To know modifier
 - To know how to run locally with ganache

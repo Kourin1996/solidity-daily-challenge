@@ -1,6 +1,6 @@
 # Day1 Calculator
 
-## Biding target
+## Target
 
 - To know how to start smart contract project with latest tools
 

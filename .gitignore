@@ -109,4 +109,6 @@ contracts/**
 /**/artifacts
 /**/cache
 /**/typechain
+
 day3/arguments.js
+memo.md
