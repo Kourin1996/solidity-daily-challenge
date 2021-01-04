@@ -1,6 +1,6 @@
 # Day3 ERC20 Token
 
-## Biding target
+## Target
 
 - To know ERC20
 

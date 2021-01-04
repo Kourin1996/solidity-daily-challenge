@@ -3,7 +3,6 @@ import chai from "chai";
 import { solidity } from "ethereum-waffle";
 import { ERC20 } from "../typechain/ERC20";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
-import { sign } from "crypto";
 
 chai.use(solidity);
 const { expect } = chai;
