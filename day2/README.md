@@ -56,3 +56,4 @@ npx hardhat run --network localhost scripts/deploy.ts
 - https://ethereum-waffle.readthedocs.io/en/latest/matchers.html
 - https://hardhat.org/
 - https://www.trufflesuite.com/ganache
+- https://solidity-jp.readthedocs.io/ja/latest/solidity-by-example.html
