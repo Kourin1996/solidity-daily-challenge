@@ -1,6 +1,5 @@
 pragma solidity >=0.6.0 <0.8.0;
 
-import "hardhat/console.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract TicTacToe {
@@ -29,7 +28,7 @@ contract TicTacToe {
         uint32 x,
         uint32 y
     );
-    event End(bytes32 indexed gameAddress, address winner);
+    event End(bytes32 indexed gameAddress, address winner, uint256 prize);
 
     modifier exists(bytes32 gameAddress) {
         require(
@@ -96,8 +95,12 @@ contract TicTacToe {
 
             uint256 prize = game.deposit;
             game.deposit = 0;
+            game.turn = Turn.End;
             payable(winner).transfer(prize);
-            emit End(gameAddress, winner);
+            emit End(gameAddress, winner, prize);
+        } else {
+            game.turn = game.turn == Turn.Circle ? Turn.Cross : Turn.Circle;
+            emit Put(gameAddress, msg.sender, piece, x, y);
         }
     }
 
@@ -130,8 +133,6 @@ contract TicTacToe {
                     : 0;
             }
         }
-
-        console.log(pieceCount1, pieceCount2, pieceCount3, pieceCount4);
 
         return
             pieceCount1 == size ||

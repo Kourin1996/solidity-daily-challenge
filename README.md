@@ -30,3 +30,5 @@ The challenge continues until I get a job as smart contract engineer.
 - To know timestamp
 
 [#Day6 Domain Name Sever](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day6)
+
+[#Day7 Tic Tac Toe](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day7)
