@@ -7,6 +7,7 @@ contract TicTacToe {
 
     enum Turn {NotStart, Circle, Cross, End}
     enum Piece {Empty, Circle, Cross}
+    enum Judge {Continue, CircleWin, CrossWin, Draw}
 
     struct Game {
         address payable circlePlayer;
@@ -14,6 +15,7 @@ contract TicTacToe {
         uint256 deposit;
         Turn turn;
         uint32 size;
+        uint40 step;
         mapping(uint32 => mapping(uint32 => Piece)) fields;
     }
 
@@ -88,28 +90,31 @@ contract TicTacToe {
             msg.sender == game.circlePlayer ? Piece.Circle : Piece.Cross;
         game.fields[x][y] = piece;
         emit Put(gameAddress, msg.sender, piece, x, y);
+        game.step += 1;
 
-        if (isGameEnded(gameAddress, piece, x, y)) {
-            address winner = msg.sender;
-            game.turn = Turn.End;
-
+        Judge judge = getJudge(gameAddress, piece, x, y);
+        if (judge == Judge.CircleWin || judge == Judge.CrossWin) {
+            address winner =
+                judge == Judge.CircleWin ? game.circlePlayer : game.crossPlayer;
             uint256 prize = game.deposit;
             game.deposit = 0;
             game.turn = Turn.End;
             payable(winner).transfer(prize);
             emit End(gameAddress, winner, prize);
+        } else if (judge == Judge.Draw) {
+            game.turn = Turn.End;
+            emit End(gameAddress, address(0), 0);
         } else {
             game.turn = game.turn == Turn.Circle ? Turn.Cross : Turn.Circle;
-            emit Put(gameAddress, msg.sender, piece, x, y);
         }
     }
 
-    function isGameEnded(
+    function getJudge(
         bytes32 gameAddress,
         Piece piece,
         uint32 x,
         uint32 y
-    ) internal view returns (bool) {
+    ) internal view returns (Judge) {
         uint32 size = games[gameAddress].size;
 
         bool shouldCheckDiagonal =
@@ -134,11 +139,19 @@ contract TicTacToe {
             }
         }
 
-        return
+        if (
             pieceCount1 == size ||
             pieceCount2 == size ||
             (shouldCheckDiagonal &&
-                (pieceCount3 == size || pieceCount4 == size));
+                (pieceCount3 == size || pieceCount4 == size))
+        ) {
+            return piece == Piece.Circle ? Judge.CircleWin : Judge.CrossWin;
+        } else {
+            return
+                games[gameAddress].step == size * size
+                    ? Judge.Draw
+                    : Judge.Continue;
+        }
     }
 
     function getGameAddress(uint256 timestamp, address owner)

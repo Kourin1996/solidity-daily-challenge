@@ -163,7 +163,7 @@ describe("TicTacToe", () => {
         .withArgs(gameAddress, signers[0].address, 1, 0, 0);
     });
 
-    it("should success and End event", async () => {
+    it("should success and End event if circle player win", async () => {
       const ticTacToeWithContract2 = ticTacToe.connect(signers[1]);
 
       await ticTacToe.put(gameAddress, 0, 0);
@@ -179,7 +179,7 @@ describe("TicTacToe", () => {
         );
     });
 
-    it("should success and End event (2)", async () => {
+    it("should success and End event if circle player win (2)", async () => {
       const ticTacToeWithContract2 = ticTacToe.connect(signers[1]);
 
       await ticTacToe.put(gameAddress, 0, 0);
@@ -196,7 +196,7 @@ describe("TicTacToe", () => {
         );
     });
 
-    it("should success and End event (3)", async () => {
+    it("should success and End event if circle player win (3)", async () => {
       const ticTacToeWithContract2 = ticTacToe.connect(signers[1]);
 
       await ticTacToe.put(gameAddress, 0, 0);
@@ -212,7 +212,7 @@ describe("TicTacToe", () => {
         );
     });
 
-    it("should success and End event (4)", async () => {
+    it("should success and End event if circle player win (4)", async () => {
       const ticTacToeWithContract2 = ticTacToe.connect(signers[1]);
 
       await ticTacToe.put(gameAddress, 0, 2);
@@ -225,6 +225,26 @@ describe("TicTacToe", () => {
           gameAddress,
           signers[0].address,
           ethers.utils.parseEther("2")
+        );
+    });
+
+    it("should success and End event if draw", async () => {
+      const ticTacToeWithContract2 = ticTacToe.connect(signers[1]);
+
+      await ticTacToe.put(gameAddress, 0, 0);
+      await ticTacToeWithContract2.put(gameAddress, 0, 1);
+      await ticTacToe.put(gameAddress, 1, 1);
+      await ticTacToeWithContract2.put(gameAddress, 2, 2);
+      await ticTacToe.put(gameAddress, 2, 0);
+      await ticTacToeWithContract2.put(gameAddress, 0, 2);
+      await ticTacToe.put(gameAddress, 1, 2);
+      await ticTacToeWithContract2.put(gameAddress, 1, 0);
+      await expect(ticTacToe.put(gameAddress, 2, 1))
+        .to.emit(ticTacToe, "End")
+        .withArgs(
+          gameAddress,
+          ethers.BigNumber.from(0),
+          ethers.utils.parseEther("0")
         );
     });
   });
