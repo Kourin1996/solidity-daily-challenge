@@ -26,4 +26,6 @@ The challenge continues until I get a job as smart contract engineer.
 
 [#Day7 Tic Tac Toe](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day7)
 
-[#Day8 Iterable Mapping](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day7)
+[#Day8 Iterable Mapping](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day8)
+
+[#Day9 ERC948](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day9)
