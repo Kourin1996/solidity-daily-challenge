@@ -56,7 +56,7 @@ contract ERC948 {
             "Subscription doesn't exist"
         );
         require(
-            subscription.startTime >= block.timestamp,
+            subscription.startTime <= block.timestamp,
             "Subscription has not started yet"
         );
         require(subscription.isActive, "Subscription is not active");
@@ -79,18 +79,14 @@ contract ERC948 {
         uint256 _period,
         uint256 _startTime
     ) public returns (bytes32) {
-        require(_tokenAddress != address(0), "Token Address must exist");
-        require(
-            _initialPayment >= 0,
-            "Initial Payment must be zero or positive integer"
-        );
+        require(_tokenAddress != address(0), "Token Address must not be zero");
         require(
             _paymentPerPeriod > 0,
             "Payment Amount per period must be positive integer"
         );
         require(_period > 0, "Period must be positive number");
         require(
-            _startTime > block.timestamp,
+            _startTime >= block.timestamp,
             "Start Time must not start in the past"
         );
 
@@ -101,8 +97,7 @@ contract ERC948 {
             "Insufficient balance for initial payment and first payment"
         );
         require(
-            token.allowance(msg.sender, serviceProviderAddress) >=
-                amountRequired,
+            token.allowance(msg.sender, address(this)) >= amountRequired,
             "Insufficient approval for initial payment and first payment"
         );
 
@@ -140,6 +135,10 @@ contract ERC948 {
     function unsubscribe(bytes32 _subscriptionId) public returns (bool) {
         Subscription memory subscription = subscriptions[_subscriptionId];
         require(
+            subscription.subscriberAddress != address(0),
+            "Subscription doesn't exist"
+        );
+        require(
             subscription.subscriberAddress == msg.sender,
             "Only subscriber can unsubscribe"
         );
@@ -160,8 +159,9 @@ contract ERC948 {
         subscription.nextPayment = nextPayment;
 
         ERC20 token = ERC20(subscription.tokenAddress);
+
         token.transferFrom(
-            msg.sender,
+            subscription.subscriberAddress,
             serviceProviderAddress,
             subscription.paymentPerPeriod
         );
