@@ -2,7 +2,7 @@
 
 ## Description
 
-A contract for wallet that required confirmations by multiple accounts for transfer, adding/removing account, and required confirmations
+A contract for wallet that requires confirmations by multiple accounts for transfer, adding/removing account, and changing required confirmations
 
 ## References
 - https://github.com/ConsenSysMesh/MultiSigWallet
