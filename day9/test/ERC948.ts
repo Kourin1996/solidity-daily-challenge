@@ -277,20 +277,18 @@ describe("ERC948", () => {
       await ethers.provider.send("evm_increaseTime", [86400 * 8]);
       await ethers.provider.send("evm_mine", []);
 
-      const tokenAmountOfProvider = await erc20WithProvider.balanceOf(
-        provider.address
-      );
-
       await expect(
         erc948WithProvider.processSubscription(subscriptionId)
       ).to.emit(erc948, "ProcessedSubscription");
+    });
 
-      const newTokenAmountOfProvider = await erc20WithProvider.balanceOf(
-        provider.address
-      );
+    it("should receive tokens", async () => {
+      await ethers.provider.send("evm_increaseTime", [86400 * 8]);
+      await ethers.provider.send("evm_mine", []);
 
-      const diff = newTokenAmountOfProvider.sub(tokenAmountOfProvider);
-      expect(diff.toNumber()).to.eq(PAYMENT_PER_PERIOD);
+      await expect(() =>
+        erc948WithProvider.processSubscription(subscriptionId)
+      ).to.changeTokenBalance(erc20, provider, PAYMENT_PER_PERIOD);
     });
   });
 });
