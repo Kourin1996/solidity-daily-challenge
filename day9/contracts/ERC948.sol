@@ -14,7 +14,6 @@ contract ERC948 {
         uint256 period;
         uint256 startTime;
         uint256 nextPayment;
-        bool isActive;
     }
 
     address payable serviceProviderAddress;
@@ -59,7 +58,6 @@ contract ERC948 {
             subscription.startTime <= block.timestamp,
             "Subscription has not started yet"
         );
-        require(subscription.isActive, "Subscription is not active");
         require(
             subscription.nextPayment <= block.timestamp,
             "Next payment has not reached now"
@@ -112,8 +110,7 @@ contract ERC948 {
             paymentPerPeriod: _paymentPerPeriod,
             period: _period,
             startTime: _startTime,
-            nextPayment: nextPayment,
-            isActive: true
+            nextPayment: nextPayment
         });
 
         token.transferFrom(msg.sender, serviceProviderAddress, _initialPayment);
