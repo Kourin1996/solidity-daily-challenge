@@ -112,3 +112,5 @@ contracts/**
 
 day3/arguments.js
 memo.md
+
+**/coverage.json
