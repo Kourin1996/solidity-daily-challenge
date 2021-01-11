@@ -28,5 +28,5 @@ function tokenFallback(address _from, uint _value, bytes _data)
 ```
 
 ## References
-- https://eips.ethereum.org/EIPS/eip-20
-- https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20
+- https://github.com/ethereum/EIPs/issues/223
+- https://github.com/Dexaran/ERC223-token-standard
