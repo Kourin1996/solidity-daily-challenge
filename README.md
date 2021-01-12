@@ -33,3 +33,5 @@ The challenge continues until I get a job as smart contract engineer.
 [#Day10 Multisig Wallet](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day10)
 
 [#Day11 ERC223 Token](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day11)
+
+[#Day12 Token Exchange](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day12)
