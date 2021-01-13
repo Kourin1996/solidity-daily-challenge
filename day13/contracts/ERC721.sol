@@ -13,6 +13,8 @@ contract ERC721 is IERC721, ERC165 {
     // Equals to `bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))`
     bytes4 private constant _ERC721_RECEIVED = 0x150b7a02;
 
+    address owner;
+
     mapping(uint256 => address) internal idToOwner;
 
     mapping(uint256 => address) internal idToApproval;
@@ -20,6 +22,11 @@ contract ERC721 is IERC721, ERC165 {
     mapping(address => uint256) private ownerToNFTokenCount;
 
     mapping(address => mapping(address => bool)) ownerToOperators;
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call");
+        _;
+    }
 
     modifier canTransfer(uint256 _tokenId) {
         address tokenOwner = idToOwner[_tokenId];
@@ -48,7 +55,9 @@ contract ERC721 is IERC721, ERC165 {
         _;
     }
 
-    constructor() {}
+    constructor() {
+        owner = msg.sender;
+    }
 
     function balanceOf(address _owner)
         external
@@ -75,7 +84,7 @@ contract ERC721 is IERC721, ERC165 {
         address _to,
         uint256 _tokenId,
         bytes memory _data
-    ) external override {
+    ) external override validNFToken(_tokenId) canTransfer(_tokenId) {
         _safeTransferFrom(_from, _to, _tokenId, _data);
     }
 
@@ -83,7 +92,7 @@ contract ERC721 is IERC721, ERC165 {
         address _from,
         address _to,
         uint256 _tokenId
-    ) external override {
+    ) external override validNFToken(_tokenId) canTransfer(_tokenId) {
         _safeTransferFrom(_from, _to, _tokenId, "");
     }
 
@@ -91,7 +100,7 @@ contract ERC721 is IERC721, ERC165 {
         address _from,
         address _to,
         uint256 _tokenId
-    ) external override canTransfer(_tokenId) validNFToken(_tokenId) {
+    ) external override validNFToken(_tokenId) canTransfer(_tokenId) {
         address tokenOwner = idToOwner[_tokenId];
         require(tokenOwner == _from, "Not owner of NFT");
         require(
@@ -105,8 +114,8 @@ contract ERC721 is IERC721, ERC165 {
     function approve(address _approved, uint256 _tokenId)
         external
         override
-        canOperate(_tokenId)
         validNFToken(_tokenId)
+        canOperate(_tokenId)
     {
         address tokenOwner = idToOwner[_tokenId];
         require(_approved != tokenOwner, "Cannot approve to myself");
@@ -142,12 +151,21 @@ contract ERC721 is IERC721, ERC165 {
         return ownerToOperators[_owner][_operator];
     }
 
+    function mint(address _to, uint256 _tokenId) external onlyOwner {
+        require(_to != address(0), "Destination address must not be zero");
+        require(idToOwner[_tokenId] == address(0), "The NFT already exists");
+
+        _addNFToken(_to, _tokenId);
+
+        emit Transfer(address(0), _to, _tokenId);
+    }
+
     function _safeTransferFrom(
         address _from,
         address _to,
         uint256 _tokenId,
         bytes memory _data
-    ) private canTransfer(_tokenId) validNFToken(_tokenId) {
+    ) private {
         address tokenOwner = idToOwner[_tokenId];
         require(tokenOwner == _from, "Not owner of NFT");
         require(
