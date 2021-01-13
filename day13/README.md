@@ -1,4 +1,4 @@
-# Day13 ERC-721 NFT Token
+# Day13 ERC-721 NFT
 
 ## Description
 
