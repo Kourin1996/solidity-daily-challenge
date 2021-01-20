@@ -41,4 +41,4 @@ Daily challenges of developing smart contract by Ethereum.
 
 [#Day15 ERC165](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day15)
 
-[#Day16 ERC1820](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day16)
+[#Day16 ERC777 Token](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day16)
