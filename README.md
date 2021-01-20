@@ -40,3 +40,5 @@ Daily challenges of developing smart contract by Ethereum.
 [#Day14 Payment Channel](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day14)
 
 [#Day15 ERC165](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day15)
+
+[#Day16 ERC1820](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day16)
