@@ -8,6 +8,8 @@ import "./IERC777.sol";
 import "./IERC777Sender.sol";
 import "./IERC777Recipient.sol";
 
+import "hardhat/console.sol";
+
 contract ERC777 is IERC777, IERC20 {
     using SafeMath for uint256;
     using Address for address;
@@ -40,6 +42,34 @@ contract ERC777 is IERC777, IERC20 {
 
     mapping(address => mapping(address => uint256)) private _allowances;
 
+    constructor(
+        string memory name_,
+        string memory symbol_,
+        address[] memory defaultOperators_,
+        uint256 amount_
+    ) public {
+        _name = name_;
+        _symbol = symbol_;
+
+        _defaultOperatorsArray = defaultOperators_;
+        for (uint256 i = 0; i < _defaultOperatorsArray.length; i++) {
+            _defaultOperators[_defaultOperatorsArray[i]] = true;
+        }
+
+        _ERC1820_REGISTRY.setInterfaceImplementer(
+            address(this),
+            keccak256("ERC777Token"),
+            address(this)
+        );
+        _ERC1820_REGISTRY.setInterfaceImplementer(
+            address(this),
+            keccak256("ERC20Token"),
+            address(this)
+        );
+
+        _mint(msg.sender, amount_, "", "");
+    }
+
     function name() public view override returns (string memory) {
         return _name;
     }
@@ -65,21 +95,21 @@ contract ERC777 is IERC777, IERC20 {
         return _totalSupply;
     }
 
-    function balanceOf(address _tokenHolder)
+    function balanceOf(address tokenHolder_)
         public
         view
         override(IERC20, IERC777)
         returns (uint256)
     {
-        return _balances[_tokenHolder];
+        return _balances[tokenHolder_];
     }
 
     function send(
-        address _recipient,
-        uint256 _amount,
-        bytes memory _data
+        address recipient_,
+        uint256 amount_,
+        bytes memory data_
     ) public virtual override {
-        _send(msg.sender, _recipient, _amount, _data, "", true);
+        _send(msg.sender, recipient_, amount_, data_, "", true);
     }
 
     function transfer(address _recipient, uint256 _amount)
@@ -272,37 +302,37 @@ contract ERC777 is IERC777, IERC20 {
     }
 
     function _send(
-        address _from,
-        address _to,
-        uint256 _amount,
-        bytes memory _userData,
-        bytes memory _operatorData,
-        bool _requireReceptionAck
+        address from_,
+        address to_,
+        uint256 amount_,
+        bytes memory userData_,
+        bytes memory operatorData_,
+        bool requireReceptionAck_
     ) internal virtual {
-        require(_from != address(0), "from address must not be zero address");
-        require(_to != address(0), "to address must not be zero address");
+        require(from_ != address(0), "from address must not be zero address");
+        require(to_ != address(0), "to address must not be zero address");
 
         address operator = msg.sender;
 
         _callTokensToSend(
             operator,
-            _from,
-            _to,
-            _amount,
-            _userData,
-            _operatorData
+            from_,
+            to_,
+            amount_,
+            userData_,
+            operatorData_
         );
 
-        _move(operator, _from, _to, _amount, _userData, _operatorData);
+        _move(operator, from_, to_, amount_, userData_, operatorData_);
 
         _callTokensReceived(
             operator,
-            _from,
-            _to,
-            _amount,
-            _userData,
-            _operatorData,
-            _requireReceptionAck
+            from_,
+            to_,
+            amount_,
+            userData_,
+            operatorData_,
+            requireReceptionAck_
         );
     }
 
@@ -403,13 +433,14 @@ contract ERC777 is IERC777, IERC20 {
         uint256 _amount,
         bytes memory _userData,
         bytes memory _operatorData,
-        bool requireReceptionAck
+        bool _requireReceptionAck
     ) private {
         address implementer =
             _ERC1820_REGISTRY.getInterfaceImplementer(
                 _to,
                 _TOKENS_RECIPIENT_INTERFACE_HASH
             );
+
         if (implementer != address(0)) {
             IERC777Recipient(implementer).tokensReceived(
                 _operator,
@@ -419,7 +450,7 @@ contract ERC777 is IERC777, IERC20 {
                 _userData,
                 _operatorData
             );
-        } else if (requireReceptionAck) {
+        } else if (_requireReceptionAck) {
             require(
                 !_to.isContract(),
                 "token recipient contract has no implementer for ERC777TokensRecipient"
