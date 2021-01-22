@@ -120,7 +120,7 @@ contract ERC777 is IERC777, IERC20 {
     {
         require(
             _recipient != address(0),
-            "_recipient must be non-zero address"
+            "recipient address must not be zero address"
         );
 
         address from = msg.sender;
@@ -395,7 +395,7 @@ contract ERC777 is IERC777, IERC20 {
             _holder != address(0),
             "_holder address must not be zero address"
         );
-        require(_spender != address(0), "_to address must not be zero address");
+        require(_spender != address(0), "to address must not be zero address");
 
         _allowances[_holder][_spender] = _value;
         emit Approval(_holder, _spender, _value);
