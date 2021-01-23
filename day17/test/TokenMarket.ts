@@ -7,8 +7,6 @@ import { AggregatorV3Mock } from "../typechain/AggregatorV3Mock";
 import { TestToken } from "../typechain/TestToken";
 import { BigNumber } from "ethers";
 
-const artifacts = require("../artifacts/contracts/TestToken.sol/TestToken.json");
-
 chai.use(solidity);
 const { expect } = chai;
 
