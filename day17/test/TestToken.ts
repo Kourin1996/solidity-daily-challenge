@@ -1,26 +1,20 @@
-import { ethers, web3 } from "hardhat";
+import { ethers } from "hardhat";
 import chai from "chai";
 import { solidity } from "ethereum-waffle";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
 import { TestToken } from "../typechain/TestToken";
-import { Wallet } from "ethers";
-
-require("@openzeppelin/test-helpers/configure")({ environment: "web3", web3 });
-const { singletons } = require("@openzeppelin/test-helpers");
 
 chai.use(solidity);
 const { expect } = chai;
 
-describe("ERC777", () => {
-  const TOKEN_NAME = "ERC777Token";
-  const TOKEN_SYMBOL = "ERC777";
-  const CAPACITY = ethers.BigNumber.from("1" + "0".repeat(18));
+describe("TestToken", () => {
+  const TOKEN_NAME = "TestToken";
+  const TOKEN_SYMBOL = "TT";
   const INITIAL_AMOUNT = ethers.BigNumber.from(10 ** 5);
 
   let signers: SignerWithAddress[] = [];
 
   let testToken: TestToken;
-  let erc1820: any;
 
   beforeEach(async () => {
     signers = await ethers.getSigners();
@@ -32,7 +26,6 @@ describe("ERC777", () => {
     testToken = (await testTokenFactory.deploy(
       TOKEN_NAME,
       TOKEN_SYMBOL,
-      CAPACITY,
       INITIAL_AMOUNT
     )) as TestToken;
 

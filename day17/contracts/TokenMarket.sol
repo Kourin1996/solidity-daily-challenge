@@ -6,8 +6,6 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./TestToken.sol";
 
-import "hardhat/console.sol";
-
 contract TokenMarket is Ownable {
     using SafeMath for uint256;
 
@@ -43,6 +41,10 @@ contract TokenMarket is Ownable {
         _decimalsForTokenUsdPrice = defaultDecimalsForTokenUsdPrice_;
     }
 
+    function tokenAddress() public view returns (address) {
+        return address(_token);
+    }
+
     receive() external payable {
         if (msg.value > 0) {
             _buyToken(msg.sender, msg.value);
@@ -65,25 +67,10 @@ contract TokenMarket is Ownable {
     function _buyToken(address reciepient_, uint256 weiAmount_) internal {
         (uint256 price, uint256 decimals) = _getCurrentPrice();
 
-        console.log("Buy from %d wei", weiAmount_);
-        console.logAddress(reciepient_);
-        console.log(
-            "Current ETH/USD price: %d USD per 1 Ether (decimals: %d)",
-            price,
-            decimals
-        );
-        console.log(
-            "Current Token/USD price: %d USD per 1 Token (decimals: %d)",
-            _tokenUsdPrice,
-            _decimalsForTokenUsdPrice
-        );
-
         uint256 numerator =
-            weiAmount_.mul(price.mul(_decimalsForTokenUsdPrice));
-        uint256 denominator = decimals.mul(_tokenUsdPrice.mul(18));
+            weiAmount_.mul(price.mul(10**_decimalsForTokenUsdPrice));
+        uint256 denominator = (10**decimals).mul(_tokenUsdPrice.mul(10**18));
         uint256 amount = numerator.div(denominator);
-
-        console.log("Buy %d tokens in %d wei", amount, weiAmount_);
 
         uint256 currentBalance = _token.balanceOf(address(this));
         require(
@@ -98,35 +85,20 @@ contract TokenMarket is Ownable {
     function _sellToken(address sender_, uint256 tokenAmount_) internal {
         (uint256 price, uint256 decimals) = _getCurrentPrice();
 
-        console.log("Sell %d tokens", tokenAmount_);
-        console.logAddress(sender_);
-        console.log(
-            "Current ETH/USD price: %d USD per 1 Ether (decimals: %d)",
-            price,
-            decimals
-        );
-        console.log(
-            "Current Token/USD price: %d USD per 1 Token (decimals: %d)",
-            _tokenUsdPrice,
-            _decimalsForTokenUsdPrice
-        );
-
         uint256 numerator =
-            tokenAmount_.mul(_tokenUsdPrice.mul(decimals.mul(18)));
-        uint256 denominator = _decimalsForTokenUsdPrice.mul(price);
+            tokenAmount_.mul(_tokenUsdPrice.mul((10**decimals).mul(10**18)));
+        uint256 denominator = (10**_decimalsForTokenUsdPrice).mul(price);
         uint256 amount = numerator.div(denominator);
 
-        console.log("Sell %d tokens by ", tokenAmount_, amount);
-
         require(
-            _token.allowance(sender_, address(this)) >= amount,
+            _token.allowance(sender_, address(this)) >= tokenAmount_,
             "Not enough allowance"
         );
 
-        _token.transferFrom(sender_, address(this), amount);
+        _token.transferFrom(sender_, address(this), tokenAmount_);
         payable(sender_).transfer(amount);
 
-        emit SellToken(sender_, amount, tokenAmount_);
+        emit SellToken(sender_, tokenAmount_, amount);
     }
 
     function _getCurrentPrice()

@@ -28,7 +28,7 @@ contract AggregatorV3Mock is AggregatorV3Interface {
         )
     {
         roundId = 0;
-        answer = 120120000000; // 1201.20 USD
+        answer = 150000000000; // 1500.00 USD
         startedAt = block.timestamp;
         updatedAt = block.timestamp;
         answeredInRound = 0;
@@ -47,7 +47,7 @@ contract AggregatorV3Mock is AggregatorV3Interface {
         )
     {
         roundId = 0;
-        answer = 120120000000; // 1201.20 USD
+        answer = 150000000000; // 1500.00 USD
         startedAt = block.timestamp;
         updatedAt = block.timestamp;
         answeredInRound = 0;
