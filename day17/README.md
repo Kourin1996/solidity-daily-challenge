@@ -2,5 +2,5 @@
 
 ## Description
 
-Buy/Sell ERC20 Token at the rate of ETH/USD  
-Get ETH/USD price from oracle by ChainLink
+Buy/Sell ERC20 Token at the rate combination of fixed rate and ETH/USD market price  
+Contract will fetch ETH/USD price from ChainLink
