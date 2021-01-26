@@ -1,23 +1,13 @@
 import { ethers, web3 } from "hardhat";
 import chai from "chai";
-import {
-  deployMockContract,
-  MockContract,
-  MockProvider,
-  solidity,
-} from "ethereum-waffle";
+import { solidity } from "ethereum-waffle";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
 import { ERC777 } from "../typechain/ERC777";
 import { ERC777Sender } from "../typechain/ERC777Sender";
 import { ERC777Recipient } from "../typechain/ERC777Recipient";
-import { Wallet } from "ethers";
 
 require("@openzeppelin/test-helpers/configure")({ environment: "web3", web3 });
-const {
-  accounts,
-  singletons,
-  constants,
-} = require("@openzeppelin/test-helpers");
+const { singletons, constants } = require("@openzeppelin/test-helpers");
 
 chai.use(solidity);
 const { expect } = chai;
