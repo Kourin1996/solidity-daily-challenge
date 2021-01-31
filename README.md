@@ -1,6 +1,6 @@
-# solidity-daily-challenges
+# solidity-small-challenges
 
-Daily challenges of developing smart contract by Ethereum.
+Smart contract examples by Ethereum.
 
 ## Environment
 
