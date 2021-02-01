@@ -47,4 +47,4 @@ Daily challenges of developing smart contract by Ethereum.
 
 [#Day18 ERC1155 Token](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day18)
 
-[#Day19 ERC725 Proxy](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day19)
+[#Day19 ERC725 Identity](https://github.com/Kourin1996/solidity-daily-challenges/tree/main/day19)
