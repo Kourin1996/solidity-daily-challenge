@@ -4,9 +4,9 @@ import "@openzeppelin/contracts/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 import "./ERC725.sol";
-import "./IERC1721.sol";
+import "../IERC1721.sol";
 
-contract ERC732Account is ERC725, IERC1271 {
+contract ERC725Account is ERC725, IERC1271 {
     bytes4 internal constant _INTERFACE_ID_ERC1271 = 0x1626ba7e;
     bytes4 internal constant _ERC1271FAILVALUE = 0xffffffff;
 
